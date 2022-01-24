@@ -1,0 +1,156 @@
+<html>
+    <head>
+        <link href="css/bootstrap.css" type="text/css" rel="stylesheet"> 
+        <link href="style.css" type="text/css" rel="stylesheet"> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+    
+     <div  class="container-fluid bg-dark"  >
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Home</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Film</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#">serial</a>
+                  </li>
+                  <li class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      animation
+                     </a>
+                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                       <li><a class="dropdown-item" href="#">disney</a></li>
+                       <li><a class="dropdown-item" href="#">anime</a></li>
+    
+                       <li><hr class="dropdown-divider"></li>
+                       <li><a class="dropdown-item" href="#">Something else here</a></li>
+                     </ul>
+                   </li>
+                   
+                 </ul>
+                 <select class="form-select me-3 nav-item mt-1" aria-label="Default select example" id="years" style="width: 20%;" onchange="display_movie(this)">
+                  <option selected>year</option>
+                 
+                </select>
+              </div>
+            </div>
+          </nav>
+          <div class="container">
+         <div class="row mt-3" id="main">
+
+
+         </div>
+        </div>
+         
+      </div>
+
+      
+    
+
+        <script>   
+        var movies;
+        function display_movie(selection){        
+         var main=document.getElementById("main");   
+         main.innerHTML=" "; 
+         for(var i=0;i<movies.length;i++){
+          if(movies[i].year == selection.value){
+            
+             var div_col=document.createElement("DIV");
+             div_col.className="col-lg-4 col-md-6 col-sm-12 mt-3";
+             
+             var div1=document.createElement("DIV");
+             div1.className="card";
+    
+             var div2=document.createElement("DIV");
+             div2.className="card-body";
+             div2.style.height="32vw";
+            
+            // div1.style.width="100px";
+             var img=document.createElement("IMG");
+             var tag=document.createElement("H5");
+             tag.className="card-title";
+            var tag_p=document.createElement("P");
+            tag_p.className="card-text";
+            var tag_p1=document.createElement("P");
+            tag_p1.className="card-text";
+            var tag_p2=document.createElement("P");
+            tag_p2.className="card-text";
+            var tag_p3=document.createElement("P");
+            tag_p3.className="card-text";
+            var tag_p4=document.createElement("P");
+            tag_p4.className="card-text";
+            var tag_p5=document.createElement("P");
+            tag_p5.className="card-text";
+            img.src=movies[i].info.image_url;
+            img.className="fluid card-img-top";
+            tag.innerHTML=movies[i].title;
+            tag_p1.innerHTML="Year:" + movies[i].year;
+            tag_p2.innerHTML="dirctors:" + movies[i].info.directors;
+            tag_p.innerHTML="actors:"+ movies[i].info.actors;
+            tag_p3.innerHTML="rating:"+ movies[i].info.rating;
+            tag_p4.innerHTML="Genres:"+ movies[i].info.genres;
+            tag_p5.innerHTML="plot:"+ movies[i].info.plot;
+
+
+            ////////////////////////////////////////////////
+            main.appendChild(div_col);          
+            div_col.appendChild(div1);
+            div1.appendChild(img);           
+            div1.appendChild(div2); 
+            div2.appendChild(tag);
+            div2.appendChild(tag_p1);
+            div2.appendChild(tag_p3);
+            div2.appendChild(tag_p4);
+            div2.appendChild(tag_p2);
+            div2.appendChild(tag_p);
+            div2.appendChild(tag_p5);
+            
+            
+          }   
+        }
+        
+       }
+
+      
+        function set_year(movies_string){
+          var years_tag=document.getElementById("years");
+          movies=JSON.parse(movies_string);
+          const array=[];
+          for(var i=0;i<movies.length;i++){
+            array[i]=movies[i].year;
+          }
+          const uniqueSet = new Set(array);
+          const backToArray = [...uniqueSet];
+          backToArray.sort();
+          console.log(backToArray);
+          for(var j=0;j<backToArray.length;j++){
+            var option=document.createElement("OPTION");
+              option.innerHTML=backToArray[j];
+              option.value=backToArray[j];
+              years_tag.appendChild(option);
+            
+          }
+        }
+
+        async function read_data(file){
+            let x=await fetch(file);
+            let y=await x.text();
+            movies=JSON.parse(y);
+            set_year(y);        
+        }
+        read_data("https://raw.githubusercontent.com/Fatemeh-Emadi/web18/main/moviedata.json");
+      //display_movie();
+
+        </script>
+         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+         <script src="js/bootstrap.js"></script>
+    </body>
+</html>
