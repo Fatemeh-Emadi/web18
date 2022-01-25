@@ -3,3 +3,8 @@
     height: 25vw;
     object-fit: none;
 }
+.card-body{
+    
+    overflow: hidden;
+    white-space: pre-line;
+}
