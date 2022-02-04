@@ -40,6 +40,10 @@
                   <option selected>year</option>
                  
                 </select>
+                  <form class="d-flex">
+                  <input class="form-control me-2 mt-3" type="search" placeholder="Search" aria-label="Search" id="input_search" onkeyup="search()">
+                  <button class="btn btn-outline-secondary mt-3" type="button" id="btn_search" onclick="search()" >Search</button>
+                </form>
               </div>
             </div>
           </nav>
@@ -178,7 +182,75 @@ function show_movie(){
           }   
         }
         
+        function search(){
+
+         
+         var value;
+         var found=false;
+         var input_search=document.getElementById("input_search");
+         value = input_search.value;
+         
+         var main=document.getElementById("main");   
+         main.innerHTML=" "; 
+         for(var i=0;i<movies.length;i++){
+          if(movies[i].title.toLowerCase().slice(0, value.length) == value || movies[i].title.toUpperCase().slice(0, value.length) == value || movies[i].title.slice(0, value.length) == value){
+            found=true;
+            //while(found){
+            var div_col=document.createElement("DIV");
+            div_col.className="col-lg-4 col-md-6 col-sm-12 mt-3";
+            
+            var div1=document.createElement("DIV");
+            div1.className="card";
+
+            var div2=document.createElement("DIV");
+            div2.className="card-body";
+            div2.style.height="32vw";
+            
+            
+            var img=document.createElement("IMG");
+            var tag=document.createElement("H5");
+            tag.className="card-title";
+            var tag_p=document.createElement("P");
+            tag_p.className="card-text";
+            var tag_p1=document.createElement("P");
+            tag_p1.className="card-text";
+            var tag_p2=document.createElement("P");
+            tag_p2.className="card-text";
+            var tag_p3=document.createElement("P");
+            tag_p3.className="card-text";
+            var tag_p4=document.createElement("P");
+            tag_p4.className="card-text";
+            var tag_p5=document.createElement("P");
+            tag_p5.className="card-text";
+            img.src=movies[i].info.image_url;
+            img.id="blackwhite";
+            img.className="fluid card-img-top";
+            tag.innerHTML=movies[i].title;
+            tag_p1.innerHTML="Year:" + movies[i].year;
+            tag_p2.innerHTML="dirctors:" + movies[i].info.directors;
+            tag_p.innerHTML="actors:"+ movies[i].info.actors;
+            tag_p3.innerHTML="rating:"+ movies[i].info.rating;
+            tag_p4.innerHTML="Genres:"+ movies[i].info.genres;
+            tag_p5.innerHTML="plot:"+ movies[i].info.plot 
+            ///////////////////////////////////////////////
+            main.appendChild(div_col);          
+            div_col.appendChild(div1);
+            div1.appendChild(img);           
+            div1.appendChild(div2); 
+            div2.appendChild(tag);
+            div2.appendChild(tag_p1);
+            div2.appendChild(tag_p3);
+            div2.appendChild(tag_p4);
+            div2.appendChild(tag_p2);
+            div2.appendChild(tag_p);
+            div2.appendChild(tag_p5);
+            
+          }
+        
+         }
+         }
        
+      
       
         function set_year(movies_string){
           var years_tag=document.getElementById("years");
